@@ -1,18 +1,37 @@
-const Request = function(url) {
+const Request = function (url) {
   this.url = url;
 }
 
-Request.prototype.get = function(onComplete) {
-  const request = new XMLHttpRequest();
-  request.open('GET', this.url);
-  request.addEventListener('load', function() {
+Request.prototype.get = function(onApiRequestComplete) {
+  const req = new XMLHttpRequest();
+  req.open('GET', this.url);
+  req.addEventListener('load', function () {
     if(this.status !== 200) {
       return;
     }
+
     const responseBody = JSON.parse(this.responseText);
-    onComplete(responseBody);
+    onApiRequestComplete(responseBody);
   });
-  request.send();
-};
+  req.send();
+}
+
+Request.prototype.post = function(data, onComplete) {
+  const req = new XMLHttpRequest();
+  req.open('POST', this.url);
+
+  req.setRequestHeader('Content-Type', 'application/json');
+
+  req.addEventListener('load', function() {
+    if (req.status !== 201) return;
+
+    const response = JSON.parse(req.responseText);
+
+    onComplete(response);
+  });
+
+  const jsonData = JSON.stringify(data);
+  req.send(jsonData);
+}
 
 module.exports = Request;

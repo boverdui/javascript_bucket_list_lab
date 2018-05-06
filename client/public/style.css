@@ -1,0 +1,21 @@
+h3 {
+  margin: auto;
+  color: rgb(255,255,255);
+}
+
+.country-detail {
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(100,100,100);
+  margin: 10px;
+}
+
+.flag {
+  width: 100%;
+}
+
+#bucket-list {
+  list-style: none;
+  padding-left: 0;
+}
